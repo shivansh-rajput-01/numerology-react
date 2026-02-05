@@ -18,7 +18,8 @@
   background: #ffffff;
   padding: 30px 20px; /* Padding kam ki taaki mobile pe space mile */
   border-radius: 20px; /* Thoda kam round mobile ke liye */
-  border-top: 5px solid #b32d2d;
+  border-top: 4px solid #a87e2f;
+  border-bottom: 6px solid #b32d2d;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);
   width: 95%; /* Mobile par side se thoda gap rahega */
   max-width: 500px; 
@@ -102,6 +103,11 @@
   transition: transform 0.2s;
 }
 
+.astro-card:hover{
+  transform: scale(1.05);
+  box-shadow: 0px 0px 2px 2px 10px rgb(209, 205, 205);
+}
+
 .astro-card span {
   font-size: 28px;
   letter-spacing: 1px;
@@ -138,6 +144,11 @@
   transition: 0.3s;
 }
 
+.tab-menu button:hover{
+  background: #ff8c42;
+  color: white;
+}
+
 .tab-menu button.active {
   background: #b32d2d;
   color: #fff;
@@ -151,14 +162,26 @@
   padding: 12px 24px;
   border-radius: 8px;
   font-weight: bold;
+  font-size: 20px;
   cursor: pointer;
+}
+
+.astro-btn{
+  /* margin-left: 0px auto; */
+  padding: 12px 40px;
+}
+
+.center-box{
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* --- Table Styles --- */
 /* --- Table Wrapper Fix --- */
 .table-wrapper {
   width: 100%;
-  background: #fff;
+  background: #a87e2f;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 
@@ -170,7 +193,8 @@
 
 table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0 4px;
   min-width: 600px; /* Force minimum width taaki columns readable rahein */
 }
 

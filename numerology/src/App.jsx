@@ -222,9 +222,11 @@ export default function App() {
                 <option value="female">Female</option>
               </select>
             </div>
-            <button type="submit" className="astro-btn">
-              CALCULATE DASHA
-            </button>
+            <div className="center-box">
+              <button type="submit" className="astro-btn">
+                Predict Now
+              </button>
+            </div>
           </form>
         </div>
       ) : (
@@ -345,6 +347,7 @@ export default function App() {
 
                     <td style={{ fontWeight: "bold" }}>{row.p}</td>
                   </tr>
+                  
                 ))}
               </tbody>
             </table>
