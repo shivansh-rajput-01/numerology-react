@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import LoshuAnalysis from "./LoshuAnalysis"; 
 import "./App.css";
+import MedicalAnalysis from "./MedicalAnalysis";
+import Miscellaneous from "./Miscellaneous";
 
 const dasha1 = [
   [1, "Sun", 8],
@@ -276,7 +279,7 @@ export default function App() {
     setShowResult(true);
   };
 
-  return (
+ return (
     <div className="astro-theme-wrapper">
       {!showResult ? (
         /* --- PAGE 0: FORM VIEW --- */
@@ -289,9 +292,7 @@ export default function App() {
                 type="text"
                 placeholder="Enter your name"
                 value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 required
               />
             </div>
@@ -300,9 +301,7 @@ export default function App() {
               <input
                 type="date"
                 value={formData.dob}
-                onChange={(e) =>
-                  setFormData({ ...formData, dob: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
                 required
               />
             </div>
@@ -310,9 +309,7 @@ export default function App() {
               <label>Gender</label>
               <select
                 value={formData.gender}
-                onChange={(e) =>
-                  setFormData({ ...formData, gender: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
               >
                 <option value="">Select</option>
                 <option value="male">Male</option>
@@ -330,7 +327,6 @@ export default function App() {
         /* --- MAIN DASHBOARD VIEW --- */
         <div className="result-view">
           <div className="astro-header">
-            {/* Dynamic Title based on View */}
             <h1>
               {isAdvanceView
                 ? "Advance Astro Dasha Insights"
@@ -338,16 +334,14 @@ export default function App() {
             </h1>
 
             <div style={{ display: "flex", gap: "10px" }}>
-              {/* Dynamic Switch Button (Sirf Paid Users ke liye) */}
               {isPaid && (
                 <button
                   className="reset-btn"
                   style={{ background: "#a87e2f", color: "white" }}
                   onClick={() => {
                     setIsAdvanceView(!isAdvanceView);
-                    if (!isAdvanceView)
-                      setTab("loshu"); // Switch karte hi grid dikhao
-                    else setTab("maha"); // Wapas aate hi dasha dikhao
+                    if (!isAdvanceView) setTab("loshu");
+                    else setTab("maha");
                   }}
                 >
                   {isAdvanceView
@@ -367,11 +361,10 @@ export default function App() {
             </div>
           </div>
 
-          {/* --- DYNAMIC CONTENT SWITCHING --- */}
           {!isAdvanceView ? (
             /* ==========================================
-             BASIC VIEW (Dasha, Search, Table)
-             ========================================== */
+               BASIC VIEW (Dasha, Search, Table)
+               ========================================== */
             <div className="basic-view-content" style={{ width: "100%" }}>
               <div className="ncards-row">
                 <div className="astro-card">
@@ -413,52 +406,27 @@ export default function App() {
                   <div className="astro-card">
                     <span>Active MahaDasha</span>
                     <p>{highlightedDashas.maha?.p || "—"}</p>
-                    <div
-                      style={{
-                        fontSize: "1.2rem",
-                        color: "#666",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {highlightedDashas.maha?.s}{" "}
-                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
-                      {highlightedDashas.maha?.e}
+                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
+                      {highlightedDashas.maha?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.maha?.e}
                     </div>
                   </div>
                   <div className="astro-card">
                     <span>Active AntarDasha</span>
                     <p>{highlightedDashas.antar?.p || "—"}</p>
-                    <div
-                      style={{
-                        fontSize: "1.2rem",
-                        color: "#666",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {highlightedDashas.antar?.s}{" "}
-                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
-                      {highlightedDashas.antar?.e}
+                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
+                      {highlightedDashas.antar?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.antar?.e}
                     </div>
                   </div>
                   <div className="astro-card">
                     <span>Active PratiyantarDasha</span>
                     <p>{highlightedDashas.prat?.p || "—"}</p>
-                    <div
-                      style={{
-                        fontSize: "1.2rem",
-                        color: "#666",
-                        marginTop: "10px",
-                      }}
-                    >
-                      {highlightedDashas.prat?.s}{" "}
-                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
-                      {highlightedDashas.prat?.e}
+                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
+                      {highlightedDashas.prat?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.prat?.e}
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Unlock Button for Unpaid Users */}
               {!isPaid && !showPaymentGateway && (
                 <div className="premium-lock-box">
                   <p>Unlock Advance Numerology Insights (Loshu Grid & more)</p>
@@ -472,24 +440,9 @@ export default function App() {
               )}
 
               <div className="tab-menu">
-                <button
-                  className={tab === "maha" ? "active" : ""}
-                  onClick={() => setTab("maha")}
-                >
-                  MahaDasha
-                </button>
-                <button
-                  className={tab === "antar" ? "active" : ""}
-                  onClick={() => setTab("antar")}
-                >
-                  AntarDasha
-                </button>
-                <button
-                  className={tab === "prat" ? "active" : ""}
-                  onClick={() => setTab("prat")}
-                >
-                  Pratyantar
-                </button>
+                <button className={tab === "maha" ? "active" : ""} onClick={() => setTab("maha")}>MahaDasha</button>
+                <button className={tab === "antar" ? "active" : ""} onClick={() => setTab("antar")}>AntarDasha</button>
+                <button className={tab === "prat" ? "active" : ""} onClick={() => setTab("prat")}>Pratyantar</button>
               </div>
 
               <div className="table-wrapper">
@@ -505,23 +458,13 @@ export default function App() {
                     </tr>
                   </thead>
                   <tbody>
-                    {(tab === "maha"
-                      ? res.maha
-                      : tab === "antar"
-                        ? res.antar
-                        : res.prat
-                    ).map((row, i) => {
+                    {(tab === "maha" ? res.maha : tab === "antar" ? res.antar : res.prat).map((row, i) => {
                       const isMatch =
-                        (tab === "maha" &&
-                          row.s === highlightedDashas.maha?.s) ||
-                        (tab === "antar" &&
-                          row.s === highlightedDashas.antar?.s) ||
+                        (tab === "maha" && row.s === highlightedDashas.maha?.s) ||
+                        (tab === "antar" && row.s === highlightedDashas.antar?.s) ||
                         (tab === "prat" && row.s === highlightedDashas.prat?.s);
                       return (
-                        <tr
-                          key={i}
-                          className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}
-                        >
+                        <tr key={i} className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}>
                           <td>{row.s}</td>
                           <td>{row.e}</td>
                           <td>{row.v || row.m}</td>
@@ -537,55 +480,74 @@ export default function App() {
             </div>
           ) : (
             /* ==========================================
-             ADVANCE VIEW (Loshu Grid Only)
-             ========================================== */
-            <div
-              className="advance-view-content"
-              style={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-              }}
-            >
-              <div className="loshu-container">
-                <div className="search-divider">
-                  <span className="divider-line"></span>
-                  <h2 className="search-title">Loshu Grid Analysis</h2>
-                  <span className="divider-line"></span>
-                </div>
+               ADVANCE VIEW (Loshu Grid + Guide Panel)
+               ========================================== */
+            <div className="advance-view-content">
+              <div className="search-divider">
+                <span className="divider-line"></span>
+                <h2 className="search-title">Vedic Grid Analysis</h2>
+                <span className="divider-line"></span>
+              </div>
 
-                <div className="loshu-grid">
-                  {res.loshu?.map((row, rowIndex) => (
-                    <div key={rowIndex} className="loshu-row">
-                      {row.map((cell, cellIndex) => (
-                        <div key={cellIndex} className="loshu-box">
-                          <span className="grid-bg-num">{cell.num}</span>
-                          <div className="num-display">
-                            {[...Array(cell.count)].map((_, i) => (
-                              <span key={i} className="dob-num">
-                                {cell.num}
-                              </span>
-                            ))}
-                            {cell.isSpecial && (
-                              <span className="fixed-num">{cell.num}</span>
-                            )}
+              <div className="loshu-flex-container">
+                {/* Left Side: Grid */}
+                <div className="loshu-main-side">
+                  <div className="loshu-grid">
+                    {res.loshu?.map((row, rowIndex) => (
+                      <div key={rowIndex} className="loshu-row">
+                        {row.map((cell, cellIndex) => (
+                          <div key={cellIndex} className="loshu-box">
+                            <span className="grid-bg-num">{cell.num}</span>
+                            <div className="num-display">
+                              {[...Array(cell.count)].map((_, i) => (
+                                <span key={i} className="dob-num">{cell.num}</span>
+                              ))}
+                              {cell.isSpecial && <span className="fixed-num">{cell.num}</span>}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  ))}
+                        ))}
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="loshu-legend">
-                  <span className="legend-item">
-                    <span className="dot dob-dot"></span> DOB Digits
-                  </span>
-                  <span className="legend-item">
-                    <span className="dot fixed-dot"></span> Basic/Destiny
-                    (Fixed)
-                  </span>
+                {/* Right Side: Guide with Dots */}
+                <div className="loshu-guide-side">
+                  <div className="guide-card">
+                    <h3>Quick Guide</h3>
+                    <ul className="guide-list">
+                      <li>
+                        <span className="guide-dot dob-dot"></span>
+                        <div>
+                          <strong>Black Digits:</strong>
+                          <p>Numbers from your Birth Date.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <span className="guide-dot fixed-dot"></span>
+                        <div>
+                          <strong>Red Digits:</strong>
+                          <p>Your <strong>Basic</strong> & <strong>Destiny</strong> numbers.</p>
+                        </div>
+                      </li>
+                      <li>
+                        <span className="guide-dot bg-dot"></span>
+                        <div>
+                          <strong>Small Faint:</strong>
+                          <p>Original position in the grid.</p>
+                        </div>
+                      </li>
+                    </ul>
+                    <div className="tip-box">
+                      💡 Multiple numbers in one box mean stronger planetary influence.
+                    </div>
+                  </div>
                 </div>
               </div>
+
+              <LoshuAnalysis gridData={res.loshu} />
+              <MedicalAnalysis gridData={res.loshu} />
+              <Miscellaneous gridData={res.loshu} />
             </div>
           )}
 
@@ -594,10 +556,7 @@ export default function App() {
             <div className="payment-placeholder">
               <div className="payment-card">
                 <h2>Complete Your Purchase</h2>
-                <p>
-                  Pay <strong>₹200</strong> to unlock Advance features for 1
-                  year.
-                </p>
+                <p>Pay <strong>₹200</strong> to unlock Advance features for 1 year.</p>
                 <div className="payment-actions">
                   <button
                     className="astro-btn"
@@ -610,10 +569,7 @@ export default function App() {
                   >
                     [Simulate Successful Payment]
                   </button>
-                  <button
-                    className="reset-btn"
-                    onClick={() => setShowPaymentGateway(false)}
-                  >
+                  <button className="reset-btn" onClick={() => setShowPaymentGateway(false)}>
                     Cancel
                   </button>
                 </div>

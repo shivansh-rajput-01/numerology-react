@@ -354,7 +354,8 @@ td {
   background-color: #fff;
   box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   outline: none;
-  min-width: 250px;
+  box-sizing: border-box;
+  min-width: 200px;
 }
 
 /* Button ko bhi thoda stretch aur bada karenge input ke sath match karne ke liye */
@@ -442,11 +443,15 @@ td {
   .search-controls input {
     font-size: 1rem;
   }
+
+  .dob-num, .fixed-num{
+    font-size: 1rem;
+  }
 }
 
 /* --- Premium Lock Section --- */
 .premium-lock-box {
-  width: 100%;
+  width: 90%;
   background: linear-gradient(135deg, #fff5e6 0%, #ffdfba 100%);
   border: 2px dashed #a87e2f;
   padding: 20px;
@@ -526,15 +531,99 @@ td {
   color: #ccc;
 }
 .dob-num {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: #444;
   font-weight: bold;
   margin: 2px;
 }
 .fixed-num {
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: #b32d2d;
   font-weight: 900;
   text-decoration: underline;
   margin: 2px;
+}
+
+/* --- Legend Card Styling --- */
+.loshu-guide-side .guide-card {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  border: 1px solid #e0e0e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: left; /* Ensures text stays left even if parent is centered */
+}
+
+.loshu-guide-side h3 {
+  color: #b32d2d;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #fdf0d5;
+  padding-bottom: 10px;
+}
+
+/* --- List & Dot Alignment --- */
+.guide-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px; /* Balanced spacing between items */
+}
+
+.guide-list li {
+  display: flex;
+  align-items: flex-start; /* Keeps dot aligned with the first line of text */
+  gap: 15px;
+}
+
+.guide-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 4px; /* Manual alignment with text top */
+  display: inline-block;
+}
+
+/* Dot Colors based on your logic */
+.dob-dot {
+  background-color: #444;
+  border: 1px solid #000;
+}
+.fixed-dot {
+  background-color: #b32d2d;
+  border: 1px solid #b32d2d;
+}
+.bg-dot {
+  background-color: #eee;
+  border: 1px solid #ccc;
+}
+
+/* --- Text Styling inside Legend --- */
+.guide-list strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.2;
+}
+
+.guide-list p {
+  margin: 4px 0 0 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* --- Tip Box styling --- */
+.tip-box {
+  margin-top: 25px;
+  padding: 12px 15px;
+  background-color: #fffaf5;
+  border-left: 4px solid #a87e2f;
+  color: #555;
+  font-size: 0.9rem;
+  font-style: italic;
+  border-radius: 0 8px 8px 0;
 }
