@@ -1,0 +1,160 @@
+/* ================= GLOBAL ================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  width: 100%;
+  overflow-x: hidden;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fffaf5;
+}
+
+/* ================= MAIN WRAPPER ================= */
+
+.pythagorean-display {
+  width: 100%;
+  padding: 20px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+/* ================= CARD COMMON STYLE ================= */
+
+.major-minor,
+.intensity,
+.force,
+.temperament {
+  width: 100%;
+  max-width: 800px;
+  background: #ffffff;
+  padding: 22px;
+  border-radius: 14px;
+  border: 1px solid #e4e4e4;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  overflow-x: auto; /* Prevent overflow breaking */
+}
+
+/* ================= HEADINGS ================= */
+
+h3 {
+  margin-bottom: 15px;
+  color: #b32d2d;
+  font-size: 1.2rem;
+}
+
+/* ================= MAJOR MINOR FLEX ================= */
+
+.major-minor {
+  display: flex;
+  gap: 30px;
+}
+
+.major,
+.minor {
+  flex: 1;
+}
+
+/* ================= LIST STYLE ================= */
+
+ul {
+  list-style: none;
+}
+
+li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  word-break: break-word;
+}
+
+/* ================= TABLE STYLE ================= */
+
+.py-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px; /* Prevents squishing */
+}
+
+.py-table th,
+.py-table td {
+  border: 2px solid #a87e2f;
+  padding: 8px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.py-table th {
+  background-color: #ffffff;
+  color: black;
+  font-weight: 600;
+}
+
+/* ================= INTENSITY TEXT ================= */
+
+.intensity p {
+  margin-top: 15px;
+  font-weight: 600;
+  color: #444;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+  .major-minor {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .major,
+  .minor {
+    width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .pythagorean-display {
+    padding: 15px 10px;
+  }
+
+  .major-minor,
+  .intensity,
+  .force,
+  .temperament {
+    padding: 16px;
+  }
+
+  .py-table {
+    min-width: 420px; /* Smaller scroll width */
+  }
+
+  .py-table th,
+  .py-table td {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  li {
+    font-size: 0.9rem;
+  }
+
+  h3 {
+    font-size: 1.05rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .py-table {
+    min-width: 360px;
+  }
+
+  .py-table th,
+  .py-table td {
+    font-size: 0.75rem;
+  }
+}
