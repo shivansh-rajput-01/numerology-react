@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import LoshuAnalysis from "./LoshuAnalysis"; 
+import LoshuAnalysis from "./LoshuAnalysis";
 import "./App.css";
 import MedicalAnalysis from "./MedicalAnalysis";
 import Miscellaneous from "./Miscellaneous";
+import DashaCharts from "./DashaCharts";
 
 const dasha1 = [
   [1, "Sun", 8],
@@ -49,6 +50,7 @@ export default function App() {
   const [formData, setFormData] = useState({ name: "", dob: "", gender: "" });
   const [showResult, setShowResult] = useState(false);
   const [isAdvanceView, setIsAdvanceView] = useState(false);
+  const [showDashaCharts, setShowDashaCharts] = useState(false);
   const [res, setRes] = useState({
     basic: 0,
     destiny: 0,
@@ -279,7 +281,7 @@ export default function App() {
     setShowResult(true);
   };
 
- return (
+  return (
     <div className="astro-theme-wrapper">
       {!showResult ? (
         /* --- PAGE 0: FORM VIEW --- */
@@ -292,7 +294,9 @@ export default function App() {
                 type="text"
                 placeholder="Enter your name"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, name: e.target.value })
+                }
                 required
               />
             </div>
@@ -301,7 +305,9 @@ export default function App() {
               <input
                 type="date"
                 value={formData.dob}
-                onChange={(e) => setFormData({ ...formData, dob: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, dob: e.target.value })
+                }
                 required
               />
             </div>
@@ -309,7 +315,9 @@ export default function App() {
               <label>Gender</label>
               <select
                 value={formData.gender}
-                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, gender: e.target.value })
+                }
               >
                 <option value="">Select</option>
                 <option value="male">Male</option>
@@ -346,7 +354,7 @@ export default function App() {
                 >
                   {isAdvanceView
                     ? "← Basic Numerology"
-                    : "Advance Numerology ✨"}
+                    : "Advance Numerology "}
                 </button>
               )}
               <button
@@ -354,6 +362,7 @@ export default function App() {
                 onClick={() => {
                   setShowResult(false);
                   setIsAdvanceView(false);
+                  setShowDashaCharts(false); // Reset toggle on new calc
                 }}
               >
                 Calculate New
@@ -363,8 +372,8 @@ export default function App() {
 
           {!isAdvanceView ? (
             /* ==========================================
-               BASIC VIEW (Dasha, Search, Table)
-               ========================================== */
+             BASIC VIEW (Dasha, Search, Table)
+             ========================================== */
             <div className="basic-view-content" style={{ width: "100%" }}>
               <div className="ncards-row">
                 <div className="astro-card">
@@ -406,22 +415,46 @@ export default function App() {
                   <div className="astro-card">
                     <span>Active MahaDasha</span>
                     <p>{highlightedDashas.maha?.p || "—"}</p>
-                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
-                      {highlightedDashas.maha?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.maha?.e}
+                    <div
+                      style={{
+                        fontSize: "1.2rem",
+                        color: "#666",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {highlightedDashas.maha?.s}{" "}
+                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
+                      {highlightedDashas.maha?.e}
                     </div>
                   </div>
                   <div className="astro-card">
                     <span>Active AntarDasha</span>
                     <p>{highlightedDashas.antar?.p || "—"}</p>
-                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
-                      {highlightedDashas.antar?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.antar?.e}
+                    <div
+                      style={{
+                        fontSize: "1.2rem",
+                        color: "#666",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {highlightedDashas.antar?.s}{" "}
+                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
+                      {highlightedDashas.antar?.e}
                     </div>
                   </div>
                   <div className="astro-card">
                     <span>Active PratiyantarDasha</span>
                     <p>{highlightedDashas.prat?.p || "—"}</p>
-                    <div style={{ fontSize: "1.2rem", color: "#666", marginTop: "10px" }}>
-                      {highlightedDashas.prat?.s} <span style={{ color: "#b32d2d" }}>to</span> {highlightedDashas.prat?.e}
+                    <div
+                      style={{
+                        fontSize: "1.2rem",
+                        color: "#666",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {highlightedDashas.prat?.s}{" "}
+                      <span style={{ color: "#b32d2d" }}>to</span>{" "}
+                      {highlightedDashas.prat?.e}
                     </div>
                   </div>
                 </div>
@@ -440,9 +473,24 @@ export default function App() {
               )}
 
               <div className="tab-menu">
-                <button className={tab === "maha" ? "active" : ""} onClick={() => setTab("maha")}>MahaDasha</button>
-                <button className={tab === "antar" ? "active" : ""} onClick={() => setTab("antar")}>AntarDasha</button>
-                <button className={tab === "prat" ? "active" : ""} onClick={() => setTab("prat")}>Pratyantar</button>
+                <button
+                  className={tab === "maha" ? "active" : ""}
+                  onClick={() => setTab("maha")}
+                >
+                  MahaDasha
+                </button>
+                <button
+                  className={tab === "antar" ? "active" : ""}
+                  onClick={() => setTab("antar")}
+                >
+                  AntarDasha
+                </button>
+                <button
+                  className={tab === "prat" ? "active" : ""}
+                  onClick={() => setTab("prat")}
+                >
+                  Pratyantar
+                </button>
               </div>
 
               <div className="table-wrapper">
@@ -451,20 +499,30 @@ export default function App() {
                     <tr>
                       <th>Start Date</th>
                       <th>End Date</th>
-                      <th>{tab === "maha" ? "Value" : "MD"}</th>
+                      <th>MD</th>
                       {tab !== "maha" && <th>AD</th>}
                       {tab === "prat" && <th>PD</th>}
                       <th>Planet</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {(tab === "maha" ? res.maha : tab === "antar" ? res.antar : res.prat).map((row, i) => {
+                    {(tab === "maha"
+                      ? res.maha
+                      : tab === "antar"
+                        ? res.antar
+                        : res.prat
+                    ).map((row, i) => {
                       const isMatch =
-                        (tab === "maha" && row.s === highlightedDashas.maha?.s) ||
-                        (tab === "antar" && row.s === highlightedDashas.antar?.s) ||
+                        (tab === "maha" &&
+                          row.s === highlightedDashas.maha?.s) ||
+                        (tab === "antar" &&
+                          row.s === highlightedDashas.antar?.s) ||
                         (tab === "prat" && row.s === highlightedDashas.prat?.s);
                       return (
-                        <tr key={i} className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}>
+                        <tr
+                          key={i}
+                          className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}
+                        >
                           <td>{row.s}</td>
                           <td>{row.e}</td>
                           <td>{row.v || row.m}</td>
@@ -480,8 +538,8 @@ export default function App() {
             </div>
           ) : (
             /* ==========================================
-               ADVANCE VIEW (Loshu Grid + Guide Panel)
-               ========================================== */
+             ADVANCE VIEW (Loshu Grid + Dasha Charts + Reports)
+             ========================================== */
             <div className="advance-view-content">
               <div className="search-divider">
                 <span className="divider-line"></span>
@@ -500,9 +558,13 @@ export default function App() {
                             <span className="grid-bg-num">{cell.num}</span>
                             <div className="num-display">
                               {[...Array(cell.count)].map((_, i) => (
-                                <span key={i} className="dob-num">{cell.num}</span>
+                                <span key={i} className="dob-num">
+                                  {cell.num}
+                                </span>
                               ))}
-                              {cell.isSpecial && <span className="fixed-num">{cell.num}</span>}
+                              {cell.isSpecial && (
+                                <span className="fixed-num">{cell.num}</span>
+                              )}
                             </div>
                           </div>
                         ))}
@@ -527,7 +589,10 @@ export default function App() {
                         <span className="guide-dot fixed-dot"></span>
                         <div>
                           <strong>Red Digits:</strong>
-                          <p>Your <strong>Basic</strong> & <strong>Destiny</strong> numbers.</p>
+                          <p>
+                            Your <strong>Basic</strong> &{" "}
+                            <strong>Destiny</strong> numbers.
+                          </p>
                         </div>
                       </li>
                       <li>
@@ -539,11 +604,49 @@ export default function App() {
                       </li>
                     </ul>
                     <div className="tip-box">
-                      💡 Multiple numbers in one box mean stronger planetary influence.
+                     Multiple numbers in one box mean stronger planetary
+                      influence.
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* --- NEW FEATURE: DASHA CHARTS TOGGLE --- */}
+              <div
+                className="dasha-controls"
+                style={{ margin: "40px 0 20px 0", textAlign: "center" }}
+              >
+                <button
+                  className="astro-btn"
+                  onClick={() => setShowDashaCharts(!showDashaCharts)}
+                  style={{
+                    backgroundColor: showDashaCharts ? "#fff" : "#b32d2d",
+                    color: showDashaCharts ? "#b32d2d" : "#fff",
+                    border: "2px solid #b32d2d",
+                    minWidth: "250px",
+                  }}
+                >
+                  {showDashaCharts
+                    ? "✕ Hide Dasha Charts"
+                    : "View Dasha Charts"}
+                </button>
+              </div>
+
+              {showDashaCharts && (
+                <DashaCharts
+                  baseLoshu={res.loshu}
+                  highlightedDashas={highlightedDashas}
+                  searchDate={searchDate}
+                />
+              )}
+
+              <hr
+                style={{
+                  border: "0",
+                  borderTop: "1px solid #eee",
+                  margin: "40px 0",
+                }}
+              />
 
               <LoshuAnalysis gridData={res.loshu} />
               <MedicalAnalysis gridData={res.loshu} />
@@ -556,7 +659,10 @@ export default function App() {
             <div className="payment-placeholder">
               <div className="payment-card">
                 <h2>Complete Your Purchase</h2>
-                <p>Pay <strong>₹200</strong> to unlock Advance features for 1 year.</p>
+                <p>
+                  Pay <strong>₹200</strong> to unlock Advance features for 1
+                  year.
+                </p>
                 <div className="payment-actions">
                   <button
                     className="astro-btn"
@@ -569,7 +675,10 @@ export default function App() {
                   >
                     [Simulate Successful Payment]
                   </button>
-                  <button className="reset-btn" onClick={() => setShowPaymentGateway(false)}>
+                  <button
+                    className="reset-btn"
+                    onClick={() => setShowPaymentGateway(false)}
+                  >
                     Cancel
                   </button>
                 </div>

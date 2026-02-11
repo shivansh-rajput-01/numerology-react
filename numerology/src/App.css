@@ -109,7 +109,7 @@
 }
 
 .astro-card span {
-  font-size: 28px;
+  font-size: 20px;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #888;
@@ -417,6 +417,10 @@ td {
   z-index: 5; /* Taaki border shadow ke upar dikhe */
   box-shadow: 0 0 25px rgba(255, 215, 0, 0.7);
   transition: all 0.3s ease;
+  /* background-color: white !important; */
+  font-weight: 700;
+  font-size: 36px !important;
+  font-style: italic;
 }
 
 /* --- 4. Mobile Responsiveness --- */
