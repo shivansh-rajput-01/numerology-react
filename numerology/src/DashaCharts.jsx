@@ -4,55 +4,87 @@ import MedicalAnalysis from "./MedicalAnalysis";
 import Miscellaneous from "./Miscellaneous";
 
 const MiniGrid = ({ title, data, dashaLabel, planetNum, searchDate }) => (
-  <div className="dasha-section-container" style={{ width: "100%", marginBottom: "60px" }}>
-    <div className="prediction-card" style={{ 
-      maxWidth: "600px", 
+  <div className="dasha-section-container" style={{ width: "100%", marginBottom: "80px" }}>
+    {/* Isolated Card for Chart Only */}
+    <div style={{ 
+      background: '#ffffff',
+      maxWidth: "550px", 
       margin: "0 auto", 
       borderLeft: "6px solid #a87e2f",
-      padding: "20px",
-      position: 'relative'
+      padding: "25px",
+      borderRadius: '15px',
+      boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+      position: 'relative',
+      display: 'block' // Ensures it doesn't try to be a grid item
     }}>
-      {/* Date Badge inside each card for extra clarity */}
+      {/* Date Badge */}
       <div style={{
         position: 'absolute',
         top: '-12px',
         right: '20px',
         background: '#a87e2f',
         color: 'white',
-        padding: '2px 12px',
+        padding: '4px 15px',
         borderRadius: '20px',
         fontSize: '12px',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        zIndex: 10
       }}>
         Status on: {searchDate}
       </div>
 
-      <h3 className="card-title" style={{ justifyContent: "center", fontSize: "22px" }}>
-        <span className="dot" style={{ backgroundColor: "#a87e2f" }}></span>
+      <h3 style={{ 
+        color: "#b32d2d", 
+        fontSize: "24px", 
+        textAlign: 'center', 
+        marginBottom: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '10px'
+      }}>
+        <span style={{ height: '10px', width: '10px', backgroundColor: '#a87e2f', borderRadius: '50%' }}></span>
         {title}
       </h3>
-      <p style={{ textAlign: "center", color: "#666" }}>
-        Active: <strong>{dashaLabel} ({planetNum})</strong>
+      
+      <p style={{ textAlign: "center", color: "#666", fontSize: '16px', marginBottom: '20px' }}>
+        Active Planet: <strong style={{color: '#a87e2f'}}>{dashaLabel} ({planetNum})</strong>
       </p>
 
-      <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
-        <div className="loshu-grid" style={{ width: "240px", margin: "0" }}>
+      {/* Grid wrapper with flex to ensure it stays centered and doesn't break */}
+      <div style={{ display: "flex", justifyContent: "center", width: '100%' }}>
+        <div className="loshu-grid" style={{ 
+            width: "240px", 
+            margin: "0", 
+            display: 'flex', 
+            flexDirection: 'column', 
+            border: '3px solid #a87e2f',
+            borderRadius: '10px' 
+        }}>
           {data.map((row, rIdx) => (
-            <div key={rIdx} className="loshu-row" style={{ height: "80px" }}>
+            <div key={rIdx} className="loshu-row" style={{ height: "80px", display: 'flex' }}>
               {row.map((cell, cIdx) => {
                 const dashaCount = cell.dashaNums ? cell.dashaNums.length : 0;
                 const normalCount = cell.count - dashaCount;
                 return (
-                  <div key={cIdx} className="loshu-box">
-                    <span className="grid-bg-num">{cell.num}</span>
-                    <div className="num-display">
+                  <div key={cIdx} className="loshu-box" style={{ 
+                      flex: 1, 
+                      border: '1px solid #eee', 
+                      position: 'relative', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      background: '#fff'
+                  }}>
+                    <span className="grid-bg-num" style={{ position: 'absolute', top: '5px', right: '5px', fontSize: '10px', color: '#ccc' }}>{cell.num}</span>
+                    <div className="num-display" style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '2px' }}>
                       {[...Array(normalCount)].map((_, i) => (
-                        <span key={`dob-${i}`} className="dob-num" style={{ fontSize: "1.5rem" }}>{cell.num}</span>
+                        <span key={`dob-${i}`} className="dob-num" style={{ fontSize: "1.5rem", fontWeight: 'bold', color: '#444' }}>{cell.num}</span>
                       ))}
                       {cell.dashaNums?.map((_, i) => (
                         <span key={`dasha-${i}`} className="dob-num" style={{ fontSize: "1.5rem", color: "#a87e2f", fontWeight: "900" }}>{cell.num}</span>
                       ))}
-                      {cell.isSpecial && <span className="fixed-num" style={{ fontSize: "1.5rem" }}>{cell.num}</span>}
+                      {cell.isSpecial && <span className="fixed-num" style={{ fontSize: "1.5rem", color: '#b32d2d', fontWeight: '900', textDecoration: 'underline' }}>{cell.num}</span>}
                     </div>
                   </div>
                 );
@@ -63,14 +95,16 @@ const MiniGrid = ({ title, data, dashaLabel, planetNum, searchDate }) => (
       </div>
     </div>
 
-    <div style={{ marginTop: "40px", width: "100%" }}>
+    {/* Predictions Section - Global CSS will apply here correctly */}
+    <div style={{ marginTop: "50px", width: "100%" }}>
       <div className="search-divider">
         <span className="divider-line"></span>
-        <h2 className="search-title" style={{ fontSize: "1.4rem" }}>{title} Predictions ({searchDate})</h2>
+        <h2 className="search-title" style={{ fontSize: "1.6rem" }}>{title} Predictions ({searchDate})</h2>
         <span className="divider-line"></span>
       </div>
       
-      <div className="dasha-grid-fix">
+      {/* Container for Reports */}
+      <div className="dasha-reports-flow" style={{ width: '100%' }}>
          <LoshuAnalysis gridData={data} />
          <MedicalAnalysis gridData={data} />
          <Miscellaneous gridData={data} />
@@ -89,7 +123,6 @@ const DashaCharts = ({ baseLoshu, highlightedDashas, searchDate }) => {
   };
 
   const formattedSearchDate = formatDate(searchDate);
-
   const planetToNum = (p) => ({ Sun:1, Moon:2, Jupiter:3, Rahu:4, Mercury:5, Venus:6, Ketu:7, Saturn:8, Mars:9 }[p] || 0);
 
   const mdNum = planetToNum(highlightedDashas.maha?.p);
@@ -108,22 +141,21 @@ const DashaCharts = ({ baseLoshu, highlightedDashas, searchDate }) => {
   const pdGrid = updateGrid(JSON.parse(JSON.stringify(adGrid)), pdNum);
 
   return (
-    <div className="dasha-wrapper" style={{ width: "100%", marginTop: "30px" }}>
-      {/* --- Main Date Header --- */}
-      <div className="search-divider" style={{ marginBottom: '40px' }}>
+    <div className="dasha-wrapper" style={{ width: "100%", marginTop: "30px", padding: '0 10px' }}>
+      <div className="search-divider" style={{ marginBottom: '50px' }}>
         <span className="divider-line" style={{ background: '#a87e2f' }}></span>
         <div style={{ textAlign: 'center' }}>
-          <h2 className="search-title" style={{ color: '#a87e2f', marginBottom: '5px' }}>
+          <h2 className="search-title" style={{ color: '#a87e2f', marginBottom: '10px' }}>
             Dasha Insights For:
           </h2>
           <div style={{ 
-            fontSize: '2rem', 
+            fontSize: '2.2rem', 
             fontWeight: '900', 
             color: '#b32d2d', 
             background: '#fff', 
-            padding: '5px 20px', 
-            borderRadius: '10px',
-            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+            padding: '10px 30px', 
+            borderRadius: '12px',
+            boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
             display: 'inline-block'
           }}>
             {formattedSearchDate}
