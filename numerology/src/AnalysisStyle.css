@@ -1,13 +1,11 @@
 /* ================= GLOBAL ================= */
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html,
-body {
+html, body {
   width: 100%;
   overflow-x: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -15,146 +13,148 @@ body {
 }
 
 /* ================= MAIN WRAPPER ================= */
-
 .pythagorean-display {
   width: 100%;
+  max-width: 1100px; /* Dashboard se align karne ke liye */
+  margin: 0 auto;
   padding: 20px 15px;
   display: flex;
   flex-direction: column;
   gap: 25px;
-  align-items: center;
 }
 
 /* ================= CARD COMMON STYLE ================= */
-
 .major-minor,
 .intensity,
 .force,
 .temperament {
   width: 100%;
-  max-width: 800px;
   background: #ffffff;
-  padding: 22px;
+  padding: 25px;
   border-radius: 14px;
   border: 1px solid #e4e4e4;
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
-  overflow-x: auto; /* Prevent overflow breaking */
+  border-bottom: 4px solid #a87e2f; /* Premium Look */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 /* ================= HEADINGS ================= */
-
 h3 {
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   color: #b32d2d;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
+  border-bottom: 2px solid #fff5f5;
+  padding-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Heading ke aage chota dot indicator */
+h3::before {
+  content: "";
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #a87e2f;
+  border-radius: 50%;
 }
 
 /* ================= MAJOR MINOR FLEX ================= */
-
 .major-minor {
   display: flex;
   gap: 30px;
 }
 
-.major,
-.minor {
+.major, .minor {
   flex: 1;
 }
 
 /* ================= LIST STYLE ================= */
-
 ul {
   list-style: none;
 }
 
 li {
-  margin-bottom: 8px;
-  font-size: 1rem;
-  word-break: break-word;
+  padding: 10px 0;
+  border-bottom: 1px solid #f9f9f9;
+  font-size: 1.05rem;
+  display: flex;
+  justify-content: space-between; /* Number aur label alag dikhenge */
 }
 
-/* ================= TABLE STYLE ================= */
+li:last-child {
+  border-bottom: none;
+}
+
+/* ================= TABLE WRAPPER (FOR MOBILE SWIPE) ================= */
+/* Ise add kiya hai taaki table responsiveness handle ho sake */
+.intensity, .force, .temperament {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
 
 .py-table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 500px; /* Prevents squishing */
+  margin-top: 10px;
 }
 
 .py-table th,
 .py-table td {
-  border: 2px solid #a87e2f;
-  padding: 8px;
+  border: 1px solid #eee; /* Light border better lagti hai */
+  padding: 12px;
   text-align: center;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .py-table th {
-  background-color: #ffffff;
-  color: black;
+  background-color: #b32d2d;
+  color: #ffffff;
   font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.py-table td {
+  font-weight: 700;
+  color: #a87e2f;
+  background: #fff;
 }
 
 /* ================= INTENSITY TEXT ================= */
-
 .intensity p {
-  margin-top: 15px;
+  margin-top: 20px;
+  padding: 10px;
+  background: #fdf8e1;
+  border-left: 4px solid #a87e2f;
   font-weight: 600;
-  color: #444;
+  color: #333;
+  border-radius: 0 8px 8px 0;
 }
 
 /* ================= RESPONSIVE ================= */
-
 @media (max-width: 900px) {
   .major-minor {
     flex-direction: column;
     gap: 20px;
   }
-
-  .major,
-  .minor {
-    width: 100%;
-  }
 }
 
 @media (max-width: 600px) {
   .pythagorean-display {
-    padding: 15px 10px;
+    padding: 10px;
   }
 
-  .major-minor,
-  .intensity,
-  .force,
-  .temperament {
-    padding: 16px;
-  }
-
+  /* Table ko mobile pe thoda "breathable" banaya */
   .py-table {
-    min-width: 420px; /* Smaller scroll width */
+    min-width: 500px; 
   }
 
-  .py-table th,
-  .py-table td {
-    padding: 6px;
-    font-size: 0.85rem;
-  }
-
-  li {
-    font-size: 0.9rem;
+  .py-table th, .py-table td {
+    padding: 10px 5px;
   }
 
   h3 {
-    font-size: 1.05rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .py-table {
-    min-width: 360px;
-  }
-
-  .py-table th,
-  .py-table td {
-    font-size: 0.75rem;
+    font-size: 1.2rem;
   }
 }
