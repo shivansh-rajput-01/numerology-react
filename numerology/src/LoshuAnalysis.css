@@ -112,3 +112,17 @@
     font-size: 18px;
   }
 }
+
+/* Ye rule ensure karega ki Dasha Charts ke andar ki reports mobile pe na phate */
+.dasha-report-grid-isolation .predictions-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: 20px !important;
+  width: 100% !important;
+}
+
+@media (max-width: 900px) {
+  .dasha-report-grid-isolation .predictions-grid {
+    grid-template-columns: 1fr !important; /* Mobile pe 1 column */
+  }
+}
