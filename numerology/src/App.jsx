@@ -109,193 +109,343 @@ export default function App() {
     });
   };
 
+  // const handleStartAnalysis = (e, type) => {
+  //   e.preventDefault();
+  //   setAnalysisType(type);
+
+  //   if (type === "chaldean") {
+  //     const dob = formData.dob;
+  //     const person = formData.name;
+  //     let b = calcBasic(dob);
+  //     let d = calcDestiny(dob);
+  //     let nName = person.trim().split(" ").join("").toLowerCase();
+  //     let nArr = [
+  //       [1, "a", "i", "j", "q", "y"],
+  //       [2, "b", "k", "r"],
+  //       [3, "c", "g", "l", "s"],
+  //       [4, "d", "m", "t"],
+  //       [5, "e", "h", "n"],
+  //       [6, "u", "v", "w", "x"],
+  //       [7, "o", "z"],
+  //       [8, "f", "p"],
+  //     ];
+  //     let nS = 0;
+  //     for (let i = 0; i < nName.length; i++) {
+  //       for (let j = 0; j < nArr.length; j++) {
+  //         if (nArr[j].includes(nName[i])) {
+  //           nS += nArr[j][0];
+  //           break;
+  //         }
+  //       }
+  //     }
+  //     let nF = dSum(nS);
+
+  //     // Logic Implementation (Original)
+  //     let mR = [];
+  //     let [y, m, day] = dob.split("-").map(Number);
+  //     let oD = day,
+  //       oM = m,
+  //       oY = y;
+  //     let sD = day,
+  //       sM = m,
+  //       sY = y;
+  //     if (sD !== 1) sD--;
+  //     else {
+  //       let mD = isLeap(sY)
+  //         ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  //         : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  //       let nDate = change([sD, sM, sY], mD);
+  //       sD = nDate[0];
+  //       sM = nDate[1];
+  //       sY = nDate[2];
+  //     }
+  //     let cY = sY + dasha1[b - 1][0];
+  //     let sI = b - 1;
+  //     for (let i = 0; i < 27; i++) {
+  //       mR.push({
+  //         s: `${oD}-${oM}-${oY}`,
+  //         e: `${sD}-${sM}-${cY}`,
+  //         v: dasha1[sI][0],
+  //         p: dasha1[sI][1],
+  //       });
+  //       oY += dasha1[sI][0];
+  //       sI = (sI + 1) % 9;
+  //       cY += dasha1[sI][0];
+  //     }
+
+  //     let aR = [];
+  //     let ay = Number(dob.split("-")[0]);
+  //     for (let i = 0; i < 3; i++) {
+  //       let idx = b - 1;
+  //       let itr = 0;
+  //       for (let j = 0; j < 45; j++) {
+  //         if (itr === dasha1[idx][0]) {
+  //           itr = 0;
+  //           idx = (idx + 1) % 9;
+  //         }
+  //         itr++;
+  //         let d2 = new Date(ay + 1, m - 1, day - 1);
+  //         let cA = calcAntar(dob, ay);
+  //         aR.push({
+  //           s: `${day}-${m}-${ay}`,
+  //           e: `${d2.getDate()}-${d2.getMonth() + 1}-${d2.getFullYear()}`,
+  //           m: dasha1[idx][0],
+  //           a: cA,
+  //           p: dasha1[cA - 1][1],
+  //         });
+  //         ay++;
+  //       }
+  //     }
+
+  //     let pR = [];
+  //     let py = Number(dob.split("-")[0]);
+  //     let fD = new Date(dob);
+  //     for (let i = 0; i < 3; i++) {
+  //       let idx = b - 1;
+  //       let itr = 0;
+  //       for (let j = 0; j < 45; j++) {
+  //         if (itr === dasha1[idx][0]) {
+  //           itr = 0;
+  //           idx = (idx + 1) % 9;
+  //         }
+  //         itr++;
+  //         let cA = calcAntar(dob, py);
+  //         let sP = cA - 1;
+  //         for (let k = 1; k <= 9; k++) {
+  //           let tD = new Date(fD);
+  //           tD.setDate(tD.getDate() + dasha1[sP][2]);
+  //           pR.push({
+  //             s: `${fD.getDate()}-${fD.getMonth() + 1}-${fD.getFullYear()}`,
+  //             e: `${tD.getDate()}-${tD.getMonth() + 1}-${tD.getFullYear()}`,
+  //             m: dasha1[idx][0],
+  //             a: cA,
+  //             pr: sP + 1,
+  //             p: dasha1[sP][1],
+  //           });
+  //           sP = (sP + 1) % 9;
+  //           fD =
+  //             k === 9 && tD.getDate() !== day
+  //               ? new Date(tD.getFullYear(), tD.getMonth(), tD.getDate() + 1)
+  //               : new Date(tD);
+  //         }
+  //         py++;
+  //       }
+  //     }
+
+  //     // --- Loshu Grid Logic ---
+  //     // --- Updated Loshu Grid Logic (Year ke sirf last 2 digits lene hain) ---
+  //     const dateParts = dob.split("-"); // [YYYY, MM, DD]
+  //     const yearDigits = dateParts[0].slice(-2).split(""); // "2005" -> ["0", "5"]
+  //     const monthDigits = dateParts[1].split(""); // "12" -> ["1", "2"]
+  //     const dayDigits = dateParts[2].split(""); // "09" -> ["0", "9"]
+
+  //     // Saare digits ko ek array mein merge karke 0 filter kar do
+  //     const loshuNumbers = [...yearDigits, ...monthDigits, ...dayDigits]
+  //       .map(Number)
+  //       .filter((num) => num !== 0);
+
+  //     // Grid structure based on client's order
+  //     const gridLayout = [
+  //       [3, 1, 9],
+  //       [6, 7, 5],
+  //       [2, 8, 4],
+  //     ];
+
+  //     const gridData = gridLayout.map((row) =>
+  //       row.map((cellNum) => {
+  //         // DOB se kitni baar wo number aaya
+  //         const dobOccurrences = loshuNumbers.filter((n) => n === cellNum);
+
+  //         // Basic ya Destiny se match check
+  //         const isBasic = cellNum === b;
+  //         const isDestiny = cellNum === d;
+
+  //         return {
+  //           num: cellNum,
+  //           count: dobOccurrences.length,
+  //           isSpecial: isBasic || isDestiny, // Special color indicator
+  //         };
+  //       }),
+  //     );
+
+  //     setRes({
+  //       basic: b,
+  //       destiny: d,
+  //       name: nF,
+  //       maha: mR,
+  //       antar: aR,
+  //       prat: pR,
+  //       loshu: gridData,
+  //     });
+
+  //     performSearch(new Date().toISOString().split("T")[0], {
+  //       maha: mR,
+  //       antar: aR,
+  //       prat: pR,
+  //     });
+  //     setShowResult(true);
+  //   }
+
+  //   setShowResult(true);
+  // };
+
   const handleStartAnalysis = (e, type) => {
-    e.preventDefault();
-    setAnalysisType(type);
+  e.preventDefault();
 
-    if (type === "chaldean") {
-      const dob = formData.dob;
-      const person = formData.name;
-      let b = calcBasic(dob);
-      let d = calcDestiny(dob);
-      let nName = person.trim().split(" ").join("").toLowerCase();
-      let nArr = [
-        [1, "a", "i", "j", "q", "y"],
-        [2, "b", "k", "r"],
-        [3, "c", "g", "l", "s"],
-        [4, "d", "m", "t"],
-        [5, "e", "h", "n"],
-        [6, "u", "v", "w", "x"],
-        [7, "o", "z"],
-        [8, "f", "p"],
-      ];
-      let nS = 0;
-      for (let i = 0; i < nName.length; i++) {
-        for (let j = 0; j < nArr.length; j++) {
-          if (nArr[j].includes(nName[i])) {
-            nS += nArr[j][0];
-            break;
-          }
+  // --- STEP 1: FORM VALIDATION ---
+  // Ye line check karegi ki user ne Name, DOB aur Gender bhara hai ya nahi
+  const form = e.target.closest("form");
+  if (form && !form.checkValidity()) {
+    form.reportValidity(); // Browser ka default "Please fill this field" popup dikhayega
+    return; // Agar empty hai toh function yahi ruk jayega
+  }
+
+  // --- STEP 2: SET ANALYSIS TYPE ---
+  setAnalysisType(type);
+
+  // --- STEP 3: LOGIC EXECUTION ---
+  if (type === "chaldean") {
+    const dob = formData.dob;
+    const person = formData.name;
+    
+    // Basic & Destiny
+    let b = calcBasic(dob);
+    let d = calcDestiny(dob);
+    
+    // Name Calculation (Chaldean)
+    let nName = person.trim().split(" ").join("").toLowerCase();
+    let nArr = [
+      [1, "a", "i", "j", "q", "y"],
+      [2, "b", "k", "r"],
+      [3, "c", "g", "l", "s"],
+      [4, "d", "m", "t"],
+      [5, "e", "h", "n"],
+      [6, "u", "v", "w", "x"],
+      [7, "o", "z"],
+      [8, "f", "p"],
+    ];
+    let nS = 0;
+    for (let i = 0; i < nName.length; i++) {
+      for (let j = 0; j < nArr.length; j++) {
+        if (nArr[j].includes(nName[i])) {
+          nS += nArr[j][0];
+          break;
         }
       }
-      let nF = dSum(nS);
+    }
+    let nF = dSum(nS);
 
-      // Logic Implementation (Original)
-      let mR = [];
-      let [y, m, day] = dob.split("-").map(Number);
-      let oD = day,
-        oM = m,
-        oY = y;
-      let sD = day,
-        sM = m,
-        sY = y;
-      if (sD !== 1) sD--;
-      else {
-        let mD = isLeap(sY)
-          ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-          : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        let nDate = change([sD, sM, sY], mD);
-        sD = nDate[0];
-        sM = nDate[1];
-        sY = nDate[2];
-      }
-      let cY = sY + dasha1[b - 1][0];
-      let sI = b - 1;
-      for (let i = 0; i < 27; i++) {
-        mR.push({
-          s: `${oD}-${oM}-${oY}`,
-          e: `${sD}-${sM}-${cY}`,
-          v: dasha1[sI][0],
-          p: dasha1[sI][1],
-        });
-        oY += dasha1[sI][0];
-        sI = (sI + 1) % 9;
-        cY += dasha1[sI][0];
-      }
-
-      let aR = [];
-      let ay = Number(dob.split("-")[0]);
-      for (let i = 0; i < 3; i++) {
-        let idx = b - 1;
-        let itr = 0;
-        for (let j = 0; j < 45; j++) {
-          if (itr === dasha1[idx][0]) {
-            itr = 0;
-            idx = (idx + 1) % 9;
-          }
-          itr++;
-          let d2 = new Date(ay + 1, m - 1, day - 1);
-          let cA = calcAntar(dob, ay);
-          aR.push({
-            s: `${day}-${m}-${ay}`,
-            e: `${d2.getDate()}-${d2.getMonth() + 1}-${d2.getFullYear()}`,
-            m: dasha1[idx][0],
-            a: cA,
-            p: dasha1[cA - 1][1],
-          });
-          ay++;
-        }
-      }
-
-      let pR = [];
-      let py = Number(dob.split("-")[0]);
-      let fD = new Date(dob);
-      for (let i = 0; i < 3; i++) {
-        let idx = b - 1;
-        let itr = 0;
-        for (let j = 0; j < 45; j++) {
-          if (itr === dasha1[idx][0]) {
-            itr = 0;
-            idx = (idx + 1) % 9;
-          }
-          itr++;
-          let cA = calcAntar(dob, py);
-          let sP = cA - 1;
-          for (let k = 1; k <= 9; k++) {
-            let tD = new Date(fD);
-            tD.setDate(tD.getDate() + dasha1[sP][2]);
-            pR.push({
-              s: `${fD.getDate()}-${fD.getMonth() + 1}-${fD.getFullYear()}`,
-              e: `${tD.getDate()}-${tD.getMonth() + 1}-${tD.getFullYear()}`,
-              m: dasha1[idx][0],
-              a: cA,
-              pr: sP + 1,
-              p: dasha1[sP][1],
-            });
-            sP = (sP + 1) % 9;
-            fD =
-              k === 9 && tD.getDate() !== day
-                ? new Date(tD.getFullYear(), tD.getMonth(), tD.getDate() + 1)
-                : new Date(tD);
-          }
-          py++;
-        }
-      }
-
-      // --- Loshu Grid Logic ---
-      // --- Updated Loshu Grid Logic (Year ke sirf last 2 digits lene hain) ---
-      const dateParts = dob.split("-"); // [YYYY, MM, DD]
-      const yearDigits = dateParts[0].slice(-2).split(""); // "2005" -> ["0", "5"]
-      const monthDigits = dateParts[1].split(""); // "12" -> ["1", "2"]
-      const dayDigits = dateParts[2].split(""); // "09" -> ["0", "9"]
-
-      // Saare digits ko ek array mein merge karke 0 filter kar do
-      const loshuNumbers = [...yearDigits, ...monthDigits, ...dayDigits]
-        .map(Number)
-        .filter((num) => num !== 0);
-
-      // Grid structure based on client's order
-      const gridLayout = [
-        [3, 1, 9],
-        [6, 7, 5],
-        [2, 8, 4],
-      ];
-
-      const gridData = gridLayout.map((row) =>
-        row.map((cellNum) => {
-          // DOB se kitni baar wo number aaya
-          const dobOccurrences = loshuNumbers.filter((n) => n === cellNum);
-
-          // Basic ya Destiny se match check
-          const isBasic = cellNum === b;
-          const isDestiny = cellNum === d;
-
-          return {
-            num: cellNum,
-            count: dobOccurrences.length,
-            isSpecial: isBasic || isDestiny, // Special color indicator
-          };
-        }),
-      );
-
-      setRes({
-        basic: b,
-        destiny: d,
-        name: nF,
-        maha: mR,
-        antar: aR,
-        prat: pR,
-        loshu: gridData,
+    // --- Original Dasha Logic (Maha, Antar, Prat) ---
+    // (Bhai tera purana logic as it is yahan rahega)
+    let mR = [];
+    let [y, m, day] = dob.split("-").map(Number);
+    let oD = day, oM = m, oY = y;
+    let sD = day, sM = m, sY = y;
+    if (sD !== 1) sD--;
+    else {
+      let mD = isLeap(sY)
+        ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      let nDate = change([sD, sM, sY], mD);
+      sD = nDate[0]; sM = nDate[1]; sY = nDate[2];
+    }
+    let cY = sY + dasha1[b - 1][0];
+    let sI = b - 1;
+    for (let i = 0; i < 27; i++) {
+      mR.push({
+        s: `${oD}-${oM}-${oY}`,
+        e: `${sD}-${sM}-${cY}`,
+        v: dasha1[sI][0],
+        p: dasha1[sI][1],
       });
-
-      performSearch(new Date().toISOString().split("T")[0], {
-        maha: mR,
-        antar: aR,
-        prat: pR,
-      });
-      setShowResult(true);
+      oY += dasha1[sI][0];
+      sI = (sI + 1) % 9;
+      cY += dasha1[sI][0];
     }
 
-    setShowResult(true);
-  };
+    // Antar & Prat Logic (Original)
+    let aR = [];
+    let ay = Number(dob.split("-")[0]);
+    for (let i = 0; i < 3; i++) {
+      let idx = b - 1; let itr = 0;
+      for (let j = 0; j < 45; j++) {
+        if (itr === dasha1[idx][0]) { itr = 0; idx = (idx + 1) % 9; }
+        itr++;
+        let d2 = new Date(ay + 1, m - 1, day - 1);
+        let cA = calcAntar(dob, ay);
+        aR.push({
+          s: `${day}-${m}-${ay}`,
+          e: `${d2.getDate()}-${d2.getMonth() + 1}-${d2.getFullYear()}`,
+          m: dasha1[idx][0], a: cA, p: dasha1[cA - 1][1],
+        });
+        ay++;
+      }
+    }
 
+    let pR = [];
+    let py = Number(dob.split("-")[0]);
+    let fD = new Date(dob);
+    for (let i = 0; i < 3; i++) {
+      let idx = b - 1; let itr = 0;
+      for (let j = 0; j < 45; j++) {
+        if (itr === dasha1[idx][0]) { itr = 0; idx = (idx + 1) % 9; }
+        itr++;
+        let cA = calcAntar(dob, py);
+        let sP = cA - 1;
+        for (let k = 1; k <= 9; k++) {
+          let tD = new Date(fD);
+          tD.setDate(tD.getDate() + dasha1[sP][2]);
+          pR.push({
+            s: `${fD.getDate()}-${fD.getMonth() + 1}-${fD.getFullYear()}`,
+            e: `${tD.getDate()}-${tD.getMonth() + 1}-${tD.getFullYear()}`,
+            m: dasha1[idx][0], a: cA, pr: sP + 1, p: dasha1[sP][1],
+          });
+          sP = (sP + 1) % 9;
+          fD = k === 9 && tD.getDate() !== day
+            ? new Date(tD.getFullYear(), tD.getMonth(), tD.getDate() + 1)
+            : new Date(tD);
+        }
+        py++;
+      }
+    }
+
+    // --- Loshu Grid Logic (Original) ---
+    const dateParts = dob.split("-");
+    const yearDigits = dateParts[0].slice(-2).split("");
+    const monthDigits = dateParts[1].split("");
+    const dayDigits = dateParts[2].split("");
+    const loshuNumbers = [...yearDigits, ...monthDigits, ...dayDigits].map(Number).filter(n => n !== 0);
+    const gridLayout = [[3, 1, 9], [6, 7, 5], [2, 8, 4]];
+    const gridData = gridLayout.map(row => row.map(cellNum => ({
+      num: cellNum,
+      count: loshuNumbers.filter(n => n === cellNum).length,
+      isSpecial: cellNum === b || cellNum === d
+    })));
+
+    setRes({
+      basic: b,
+      destiny: d,
+      name: nF,
+      maha: mR,
+      antar: aR,
+      prat: pR,
+      loshu: gridData,
+    });
+
+    performSearch(new Date().toISOString().split("T")[0], { maha: mR, antar: aR, prat: pR });
+  }
+
+  // --- STEP 4: SHOW RESULT ---
+  // Ab chahay Chaldean ho ya Pythagorean, result tabhi dikhega jab validation pass ho chuki ho
+  setShowResult(true);
+};
   return (
     <div className="astro-theme-wrapper">
       {!showResult ? (
         /* --- PAGE 0: FORM VIEW --- */
         <div className="form-container">
           <h2 className="main-title">Numerology Calculator</h2>
-          <form onSubmit ={(e) => e.preventDefault()}>
+          <form onSubmit={(e) => e.preventDefault()}>
             <div className="input-box">
               <label>Full Name</label>
               <input
@@ -332,7 +482,7 @@ export default function App() {
                 <option value="female">Female</option>
               </select>
             </div>
-            <div className="center-box">
+            {/* <div className="center-box">
               <button
                 type="button"
                 className="astro-btn"
@@ -348,7 +498,24 @@ export default function App() {
               >
                 Pythagorean Numerology
               </button>
-            </div>
+            </div> */}
+            <div className="center-box">
+  <button
+    type="button"
+    className="astro-btn"
+    onClick={(e) => handleStartAnalysis(e, "chaldean")}
+  >
+    Numerology
+  </button>
+
+  <button
+    type="button"
+    className="astro-btn pythagorean-btn"
+    onClick={(e) => handleStartAnalysis(e, "pythagorean")}
+  >
+    Pythagorean Numerology
+  </button>
+</div>
           </form>
         </div>
       ) : (
@@ -531,48 +698,55 @@ export default function App() {
                     </button>
                   </div>
 
-                  <div className="table-wrapper">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Start Date</th>
-                          <th>End Date</th>
-                          <th>MD</th>
-                          {tab !== "maha" && <th>AD</th>}
-                          {tab === "prat" && <th>PD</th>}
-                          <th>Planet</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(tab === "maha"
-                          ? res.maha
-                          : tab === "antar"
-                            ? res.antar
-                            : res.prat
-                        ).map((row, i) => {
-                          const isMatch =
-                            (tab === "maha" &&
-                              row.s === highlightedDashas.maha?.s) ||
-                            (tab === "antar" &&
-                              row.s === highlightedDashas.antar?.s) ||
-                            (tab === "prat" &&
-                              row.s === highlightedDashas.prat?.s);
-                          return (
-                            <tr
-                              key={i}
-                              className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}
-                            >
-                              <td>{row.s}</td>
-                              <td>{row.e}</td>
-                              <td>{row.v || row.m}</td>
-                              {tab !== "maha" && <td>{row.a}</td>}
-                              {tab === "prat" && <td>{row.pr}</td>}
-                              <td style={{ fontWeight: "bold" }}>{row.p}</td>
-                            </tr>
-                          );
-                        })}
-                      </tbody>
-                    </table>
+                  <div className="table-section">
+                    {/* Mobile view indicator */}
+                    <div className="swipe-hint" style={{ display: "none" }}>
+                      {/* Ise CSS se mobile pe block kar dena */}
+                    </div>
+
+                    <div className="table-wrapper">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>MD</th>
+                            {tab !== "maha" && <th>AD</th>}
+                            {tab === "prat" && <th>PD</th>}
+                            <th>Planet</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(tab === "maha"
+                            ? res.maha
+                            : tab === "antar"
+                              ? res.antar
+                              : res.prat
+                          ).map((row, i) => {
+                            const isMatch =
+                              (tab === "maha" &&
+                                row.s === highlightedDashas.maha?.s) ||
+                              (tab === "antar" &&
+                                row.s === highlightedDashas.antar?.s) ||
+                              (tab === "prat" &&
+                                row.s === highlightedDashas.prat?.s);
+                            return (
+                              <tr
+                                key={i}
+                                className={`row-${row.p} ${isMatch ? "highlight-row" : ""}`}
+                              >
+                                <td>{row.s}</td>
+                                <td>{row.e}</td>
+                                <td>{row.v || row.m}</td>
+                                {tab !== "maha" && <td>{row.a}</td>}
+                                {tab === "prat" && <td>{row.pr}</td>}
+                                <td style={{ fontWeight: "bold" }}>{row.p}</td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 </div>
               ) : (
@@ -653,6 +827,9 @@ export default function App() {
                   </div>
 
                   {/* --- NEW FEATURE: DASHA CHARTS TOGGLE --- */}
+                  <LoshuAnalysis gridData={res.loshu} />
+                  <MedicalAnalysis gridData={res.loshu} />
+                  <Miscellaneous gridData={res.loshu} />
                   <div
                     className="dasha-controls"
                     style={{ margin: "40px 0 20px 0", textAlign: "center" }}
@@ -688,10 +865,6 @@ export default function App() {
                       margin: "40px 0",
                     }}
                   />
-
-                  <LoshuAnalysis gridData={res.loshu} />
-                  <MedicalAnalysis gridData={res.loshu} />
-                  <Miscellaneous gridData={res.loshu} />
                 </div>
               )}
 

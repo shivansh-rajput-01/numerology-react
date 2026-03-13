@@ -168,13 +168,17 @@
 
 .astro-btn {
   /* margin-left: 0px auto; */
+  width: 80%;
   padding: 12px 40px;
 }
 
 .center-box {
   width: 100%;
   display: flex;
+  gap: 5px;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 
 /* --- Table Styles --- */
@@ -184,6 +188,7 @@
   background: #a87e2f;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  position: relative;
 
   /* Yeh properties table ko cut hone se bachayengi */
   overflow-x: auto;
@@ -327,6 +332,23 @@ td {
 
   .astro-card span {
     font-size: 1rem;
+  }
+
+  .table-wrapper::before {
+    content: "↔ Swipe left-right to view full table";
+    display: block;
+    text-align: center;
+    font-size: 12px;
+    color: #a87e2f;
+    background: #fff8e1;
+    padding: 5px 0;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    border-bottom: 1px dashed #a87e2f;
+  }
+
+  table {
+    min-width: 600px; 
   }
 }
 

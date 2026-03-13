@@ -1,72 +1,80 @@
 import React from "react";
+import LoshuAnalysis from "./LoshuAnalysis";
+import MedicalAnalysis from "./MedicalAnalysis";
+import Miscellaneous from "./Miscellaneous";
 
-const MiniGrid = ({ title, data, dashaLabel, planetNum }) => (
-  <div
-    className="prediction-card"
-    style={{ flex: "1", minWidth: "300px", textAlign: "center" }}
-  >
-    <h3 className="card-title" style={{ justifyContent: "center" }}>
-      <span className="dot" style={{ backgroundColor: "#a87e2f" }}></span>
-      {title}
-    </h3>
-    <p style={{ fontSize: "14px", color: "#666", marginBottom: "15px" }}>
-      Active Planet:{" "}
-      <strong>
-        {dashaLabel} ({planetNum})
-      </strong>
-    </p>
+const MiniGrid = ({ title, data, dashaLabel, planetNum, searchDate }) => (
+  <div className="dasha-section-container" style={{ width: "100%", marginBottom: "60px" }}>
+    <div className="prediction-card" style={{ 
+      maxWidth: "600px", 
+      margin: "0 auto", 
+      borderLeft: "6px solid #a87e2f",
+      padding: "20px",
+      position: 'relative'
+    }}>
+      {/* Date Badge inside each card for extra clarity */}
+      <div style={{
+        position: 'absolute',
+        top: '-12px',
+        right: '20px',
+        background: '#a87e2f',
+        color: 'white',
+        padding: '2px 12px',
+        borderRadius: '20px',
+        fontSize: '12px',
+        fontWeight: 'bold'
+      }}>
+        Status on: {searchDate}
+      </div>
 
-    <div className="loshu-grid" style={{ margin: "0 auto", width: "240px" }}>
-      {data.map((row, rIdx) => (
-        <div key={rIdx} className="loshu-row" style={{ height: "80px" }}>
-          {row.map((cell, cIdx) => {
-            // Jitne dasha numbers is cell mein hain unka count
-            const dashaCount = cell.dashaNums ? cell.dashaNums.length : 0;
-            const normalCount = cell.count - dashaCount;
+      <h3 className="card-title" style={{ justifyContent: "center", fontSize: "22px" }}>
+        <span className="dot" style={{ backgroundColor: "#a87e2f" }}></span>
+        {title}
+      </h3>
+      <p style={{ textAlign: "center", color: "#666" }}>
+        Active: <strong>{dashaLabel} ({planetNum})</strong>
+      </p>
 
-            return (
-              <div key={cIdx} className="loshu-box">
-                <span className="grid-bg-num">{cell.num}</span>
-                <div className="num-display">
-                  {/* 1. DOB wale normal Black numbers */}
-                  {[...Array(normalCount)].map((_, i) => (
-                    <span
-                      key={`dob-${i}`}
-                      className="dob-num"
-                      style={{ fontSize: "1.5rem", color: "#444" }}
-                    >
-                      {cell.num}
-                    </span>
-                  ))}
-
-                  {/* 2. DASHA wale saare numbers (Color: #a87e2f) */}
-                  {cell.dashaNums &&
-                    cell.dashaNums.map((_, i) => (
-                      <span
-                        key={`dasha-${i}`}
-                        className="dob-num"
-                        style={{
-                          fontSize: "1.5rem",
-                          color: "#a87e2f",
-                          fontWeight: "900",
-                        }}
-                      >
-                        {cell.num}
-                      </span>
-                    ))}
-
-                  {/* 3. Original Basic/Destiny Red numbers */}
-                  {cell.isSpecial && (
-                    <span className="fixed-num" style={{ fontSize: "1.5rem" }}>
-                      {cell.num}
-                    </span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
+      <div style={{ display: "flex", justifyContent: "center", marginTop: "15px" }}>
+        <div className="loshu-grid" style={{ width: "240px", margin: "0" }}>
+          {data.map((row, rIdx) => (
+            <div key={rIdx} className="loshu-row" style={{ height: "80px" }}>
+              {row.map((cell, cIdx) => {
+                const dashaCount = cell.dashaNums ? cell.dashaNums.length : 0;
+                const normalCount = cell.count - dashaCount;
+                return (
+                  <div key={cIdx} className="loshu-box">
+                    <span className="grid-bg-num">{cell.num}</span>
+                    <div className="num-display">
+                      {[...Array(normalCount)].map((_, i) => (
+                        <span key={`dob-${i}`} className="dob-num" style={{ fontSize: "1.5rem" }}>{cell.num}</span>
+                      ))}
+                      {cell.dashaNums?.map((_, i) => (
+                        <span key={`dasha-${i}`} className="dob-num" style={{ fontSize: "1.5rem", color: "#a87e2f", fontWeight: "900" }}>{cell.num}</span>
+                      ))}
+                      {cell.isSpecial && <span className="fixed-num" style={{ fontSize: "1.5rem" }}>{cell.num}</span>}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
+    </div>
+
+    <div style={{ marginTop: "40px", width: "100%" }}>
+      <div className="search-divider">
+        <span className="divider-line"></span>
+        <h2 className="search-title" style={{ fontSize: "1.4rem" }}>{title} Predictions ({searchDate})</h2>
+        <span className="divider-line"></span>
+      </div>
+      
+      <div className="dasha-grid-fix">
+         <LoshuAnalysis gridData={data} />
+         <MedicalAnalysis gridData={data} />
+         <Miscellaneous gridData={data} />
+      </div>
     </div>
   </div>
 );
@@ -74,109 +82,59 @@ const MiniGrid = ({ title, data, dashaLabel, planetNum }) => (
 const DashaCharts = ({ baseLoshu, highlightedDashas, searchDate }) => {
   if (!highlightedDashas || !highlightedDashas.maha) return null;
 
-  // Date format change logic (YYYY-MM-DD to DD-MM-YYYY)
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
     const [y, m, d] = dateStr.split("-");
     return `${d}-${m}-${y}`;
   };
 
-  const planetToNum = (planet) => {
-    const map = {
-      Sun: 1,
-      Moon: 2,
-      Jupiter: 3,
-      Rahu: 4,
-      Mercury: 5,
-      Venus: 6,
-      Ketu: 7,
-      Saturn: 8,
-      Mars: 9,
-    };
-    return map[planet] || 0;
-  };
+  const formattedSearchDate = formatDate(searchDate);
+
+  const planetToNum = (p) => ({ Sun:1, Moon:2, Jupiter:3, Rahu:4, Mercury:5, Venus:6, Ketu:7, Saturn:8, Mars:9 }[p] || 0);
 
   const mdNum = planetToNum(highlightedDashas.maha?.p);
   const adNum = planetToNum(highlightedDashas.antar?.p);
   const pdNum = planetToNum(highlightedDashas.prat?.p);
 
-  // Helper to add dasha number and keep track of it
-  const updateGridIncremental = (grid, newNum) => {
-    return grid.map((row) =>
-      row.map((cell) => {
-        if (cell.num === newNum) {
-          const existingDashaNums = cell.dashaNums || [];
-          return {
-            ...cell,
-            count: cell.count + 1,
-            dashaNums: [...existingDashaNums, newNum],
-          };
-        }
-        return { ...cell };
-      }),
-    );
-  };
+  const updateGrid = (grid, newNum) => grid.map(row => row.map(cell => {
+    if (cell.num === newNum) {
+      return { ...cell, count: cell.count + 1, dashaNums: [...(cell.dashaNums || []), newNum] };
+    }
+    return { ...cell };
+  }));
 
-  // 1. MD Chart (Base + MD)
-  const mdGrid = updateGridIncremental(
-    JSON.parse(JSON.stringify(baseLoshu)),
-    mdNum,
-  );
-
-  // 2. AD Chart (MD Grid + AD) - Now MD and AD both will be gold
-  const adGrid = updateGridIncremental(
-    JSON.parse(JSON.stringify(mdGrid)),
-    adNum,
-  );
-
-  // 3. PD Chart (AD Grid + PD) - Now MD, AD and PD all will be gold
-  const pdGrid = updateGridIncremental(
-    JSON.parse(JSON.stringify(adGrid)),
-    pdNum,
-  );
+  const mdGrid = updateGrid(JSON.parse(JSON.stringify(baseLoshu)), mdNum);
+  const adGrid = updateGrid(JSON.parse(JSON.stringify(mdGrid)), adNum);
+  const pdGrid = updateGrid(JSON.parse(JSON.stringify(adGrid)), pdNum);
 
   return (
-    <div className="analysis-container" style={{ marginTop: "20px" }}>
-      <div style={{ textAlign: "center", marginBottom: "20px" }}>
-        <h4 style={{ color: "#a87e2f", margin: "0", fontSize: "1.2rem" }}>
-          Analysis for Date:{" "}
-          <span style={{ color: "#444" }}>
-            {formatDate(searchDate) || "Current Date"}
-          </span>
-        </h4>
-        <p style={{ fontSize: "0.9rem", color: "#666" }}>
-          (Showing dynamic planetary activations in Gold)
-        </p>
+    <div className="dasha-wrapper" style={{ width: "100%", marginTop: "30px" }}>
+      {/* --- Main Date Header --- */}
+      <div className="search-divider" style={{ marginBottom: '40px' }}>
+        <span className="divider-line" style={{ background: '#a87e2f' }}></span>
+        <div style={{ textAlign: 'center' }}>
+          <h2 className="search-title" style={{ color: '#a87e2f', marginBottom: '5px' }}>
+            Dasha Insights For:
+          </h2>
+          <div style={{ 
+            fontSize: '2rem', 
+            fontWeight: '900', 
+            color: '#b32d2d', 
+            background: '#fff', 
+            padding: '5px 20px', 
+            borderRadius: '10px',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+            display: 'inline-block'
+          }}>
+            {formattedSearchDate}
+          </div>
+        </div>
+        <span className="divider-line" style={{ background: '#a87e2f' }}></span>
       </div>
 
-      <div
-        className="predictions-grid"
-        style={{
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-around",
-          gap: "20px",
-        }}
-      >
-        <MiniGrid
-          title="MahaDasha Chart"
-          data={mdGrid}
-          dashaLabel={highlightedDashas.maha?.p}
-          planetNum={mdNum}
-        />
-        <MiniGrid
-          title="AntarDasha Chart"
-          data={adGrid}
-          dashaLabel={highlightedDashas.antar?.p}
-          planetNum={adNum}
-        />
-        <MiniGrid
-          title="Pratyantardasha Chart"
-          data={pdGrid}
-          dashaLabel={highlightedDashas.prat?.p}
-          planetNum={pdNum}
-        />
-      </div>
+      <MiniGrid title="MahaDasha" data={mdGrid} dashaLabel={highlightedDashas.maha?.p} planetNum={mdNum} searchDate={formattedSearchDate} />
+      <MiniGrid title="AntarDasha" data={adGrid} dashaLabel={highlightedDashas.antar?.p} planetNum={adNum} searchDate={formattedSearchDate} />
+      <MiniGrid title="PratyantarDasha" data={pdGrid} dashaLabel={highlightedDashas.prat?.p} planetNum={pdNum} searchDate={formattedSearchDate} />
     </div>
   );
 };
