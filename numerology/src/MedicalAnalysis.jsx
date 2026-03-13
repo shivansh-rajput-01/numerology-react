@@ -15,10 +15,109 @@ const MedicalAnalysis = ({ gridData }) => {
     const results = [];
     // --- Unique Medical Predictions (Common with Loshu Removed) ---
 
+    if (isPresent(1) && isPresent(8) && isMissing(7)) {
+      results.push({
+        title: "SUN - SATURN (Ketu Missing)",
+        desc: [
+          "Sun is Karaka of Bones and Saturn is Karaka of joints",
+          "Arthritis",
+          "Bone related disease",
+          "Feel depression if native is in JOB DISTURBANCES",
+          "HEALTH ISSUES TO FATHER",
+          "DISRESPECT",
+        ],
+      });
+    }
+
+    if (isPresent(2) && isPresent(4) && isMissing(8)) {
+      results.push({
+        title: "MOON - RAHU (Saturn Missing)",
+        desc: [
+          "Mental Disease but not depression yoga because of Rahu - Confusion",
+          "Feel unnecessary Fear - illusion",
+          "Family Struggle",
+          "Eyesight Weak",
+          "Worry",
+          "Anxiety Problem",
+          "Inferiority Complex - Like Black Magic",
+        ],
+      });
+    }
+
+    if (isPresent(9) && isPresent(4) && isMissing(5)) {
+      results.push({
+        title: "BANDHAN YOGA , MARS - RAHU (Mercury Missing)",
+        desc: [
+          "Court, Litigation",
+          "Hospital",
+          "Doctor",
+          "FIRE ACCIDENTS",
+          "Bloodshed",
+          "Mentally Disturbances",
+          "Lawyer",
+          "TAKE FOOD IN KITCHEN FOR 40 DAYS REGULARLY OR BUY AN ITEM OF FOOD/DRINK FROM HOSPITAL IN A WEEK",
+        ],
+      });
+    }
+
+    if (isPresent(5) && isPresent(4) && isMissing(9)) {
+      results.push({
+        title: "BANDHAN YOGA - MERCURY - RAHU (Mars Absent)",
+        desc: [
+          "Skin Issues",
+          "Intestine Problems",
+          "Weak eyesight",
+          "Illusion in Mind",
+          "Vata related issues",
+          "Litigation to self or in a family",
+          "Disease self or in a family",
+        ],
+      });
+    }
+
+    if (isPresent(7) && isPresent(6) && isMissing(5)) {
+      results.push({
+        title: "KETU - VENUS (Mercury Missing)",
+        desc: [
+          "Love Affair",
+          "Spirituality",
+          "Instability issues",
+          "Attractive",
+          "Fond of Music and Art",
+        ],
+      });
+    }
+
+    if (isPresent(7) && isPresent(5) && isMissing(6)) {
+      results.push({
+        title: "Easy Money {(KETU - MERCURY) - VENUS Absent}",
+        desc: [
+          "Lucky people to get more money easily",
+          "Native's work appreciated by other people",
+          "Attractive look, smart",
+          "Easy relationships",
+          "They make friends easily",
+          "Good speaker",
+          "Good writer",
+        ],
+      });
+    }
+
     if (isPresent(1) && isPresent(7) && isMissing(8)) {
       results.push({
         title: "DISEASE - SUN - KETU",
         desc: ["Heart Disease And Cholesterol problem"],
+      });
+    }
+
+    if (isPresent(6) && isPresent(2) && isMissing(3)) {
+      results.push({
+        title: "VENUS -MOON (Jupiter Missing)",
+        desc: [
+          "DISEASE",
+          "CHANCES OF DIABETIES AND URINARY DISEASE",
+          "CAN DO EVERTHING FOR LUXARY",
+        ],
       });
     }
 
@@ -34,6 +133,34 @@ const MedicalAnalysis = ({ gridData }) => {
       });
     }
 
+    if (isPresent(9) && isPresent(4)) {
+      results.push({
+        title: "BANDHAN YOG (Mars - Rahu)",
+        desc: [
+          "OUTSPOKEN",
+          "JACK OF ALL MASTER OF NONE",
+          "PROPERTY DISPUTE",
+          "MULTITASKER",
+          "QUICK DECISION",
+          "QUICK ACTION",
+        ],
+      });
+    }
+
+    if (isPresent(3) && isPresent(2)) {
+      results.push({
+        title: "JUPITER - MOON",
+        desc: [
+          "DON'T WANT TO MARRY",
+          "RICE OF DESTINY AFTER MARRIAGE",
+          "GAYNAE RELATED ISSUES",
+          "ATTRACTIVE",
+          "MUSIC LOVER",
+          "GOOD EDUCATIOON",
+        ],
+      });
+    }
+
     if (isPresent(2) && isPresent(8) && isPresent(4)) {
       results.push({
         title: "MOON - SATURN - RAHU - 1",
@@ -44,6 +171,19 @@ const MedicalAnalysis = ({ gridData }) => {
           "Accident prone can lead to Death",
           "Out Spoken or impulsive while get Aggressive",
           "Face Various UP and Down in Life",
+        ],
+      });
+    }
+
+    if (isPresent(1) && isPresent(8)) {
+      results.push({
+        title: "SUN - SARTURN",
+        desc: [
+          "STRONG INTUTION POWER",
+          "BLACK TOUNG",
+          "KNOWLEDGE OF TECHNICAL WORK",
+          "MORE THAN ONE SOURCE OF INCOME",
+          "HELP FUL BUT DOES NOT GET IN RETURN",
         ],
       });
     }
@@ -126,7 +266,6 @@ const MedicalAnalysis = ({ gridData }) => {
         ],
       });
     }
-
     const cell2 = flatData.find((c) => c.num === 2);
     if (cell2 && cell2.count >= 3) {
       results.push({
