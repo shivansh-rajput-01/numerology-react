@@ -72,7 +72,7 @@ export default function App() {
     prat: null,
   });
 
-  const [isPaid, setIsPaid] = useState(false); // Default false, payment ke baad true hoga
+  const [isPaid, setIsPaid] = useState(true); // Default false, payment ke baad true hoga
   const [showPaymentGateway, setShowPaymentGateway] = useState(false);
 
   const handleAdvanceAccess = () => {
@@ -159,51 +159,109 @@ export default function App() {
 
     // --- Original Dasha Logic (Maha, Antar, Prat) ---
 
+    // let mR = [];
+    // let [y, m, day] = dob.split("-").map(Number);
+    // let oD = day, oM = m, oY = y;
+    // let sD = day, sM = m, sY = y;
+    // if (sD !== 1) sD--;
+    // else {
+    //   let mD = isLeap(sY)
+    //     ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    //     : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    //   let nDate = change([sD, sM, sY], mD);
+    //   sD = nDate[0]; sM = nDate[1]; sY = nDate[2];
+    // }
+    // let cY = sY + dasha1[b - 1][0];
+    // let sI = b - 1;
+    // for (let i = 0; i < 27; i++) {
+    //   mR.push({
+    //     s: `${oD}-${oM}-${oY}`,
+    //     e: `${sD}-${sM}-${cY}`,
+    //     v: dasha1[sI][0],
+    //     p: dasha1[sI][1],
+    //   });
+    //   oY += dasha1[sI][0];
+    //   sI = (sI + 1) % 9;
+    //   cY += dasha1[sI][0];
+    // }
     let mR = [];
-    let [y, m, day] = dob.split("-").map(Number);
-    let oD = day, oM = m, oY = y;
-    let sD = day, sM = m, sY = y;
-    if (sD !== 1) sD--;
-    else {
-      let mD = isLeap(sY)
-        ? [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        : [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-      let nDate = change([sD, sM, sY], mD);
-      sD = nDate[0]; sM = nDate[1]; sY = nDate[2];
-    }
-    let cY = sY + dasha1[b - 1][0];
-    let sI = b - 1;
-    for (let i = 0; i < 27; i++) {
-      mR.push({
-        s: `${oD}-${oM}-${oY}`,
-        e: `${sD}-${sM}-${cY}`,
-        v: dasha1[sI][0],
-        p: dasha1[sI][1],
-      });
-      oY += dasha1[sI][0];
-      sI = (sI + 1) % 9;
-      cY += dasha1[sI][0];
-    }
+let [y, m, day] = dob.split("-").map(Number);
+let currentStart = new Date(y, m - 1, day); // Asli DOB se shuru
+
+let sI = b - 1; // Basic number index
+
+for (let i = 0; i < 27; i++) {
+  let duration = dasha1[sI][0];
+  
+  // End Date: Start Date + Duration Years - 1 Din
+  let currentEnd = new Date(currentStart);
+  currentEnd.setFullYear(currentEnd.getFullYear() + duration);
+  currentEnd.setDate(currentEnd.getDate() - 1);
+
+  mR.push({
+    s: `${currentStart.getDate()}-${currentStart.getMonth() + 1}-${currentStart.getFullYear()}`,
+    e: `${currentEnd.getDate()}-${currentEnd.getMonth() + 1}-${currentEnd.getFullYear()}`,
+    v: duration,
+    p: dasha1[sI][1],
+  });
+
+  // Agli row ki Start Date = End Date + 1 Din
+  currentStart = new Date(currentEnd);
+  currentStart.setDate(currentStart.getDate() + 1);
+  
+  sI = (sI + 1) % 9;
+}
 
     // Antar & Prat Logic (Original)
-    let aR = [];
-    let ay = Number(dob.split("-")[0]);
-    for (let i = 0; i < 3; i++) {
-      let idx = b - 1; let itr = 0;
-      for (let j = 0; j < 45; j++) {
-        if (itr === dasha1[idx][0]) { itr = 0; idx = (idx + 1) % 9; }
-        itr++;
-        let d2 = new Date(ay + 1, m - 1, day - 1);
-        let cA = calcAntar(dob, ay);
-        aR.push({
-          s: `${day}-${m}-${ay}`,
-          e: `${d2.getDate()}-${d2.getMonth() + 1}-${d2.getFullYear()}`,
-          m: dasha1[idx][0], a: cA, p: dasha1[cA - 1][1],
-        });
-        ay++;
-      }
-    }
+    // let aR = [];
+    // let ay = Number(dob.split("-")[0]);
+    // for (let i = 0; i < 3; i++) {
+    //   let idx = b - 1; let itr = 0;
+    //   for (let j = 0; j < 45; j++) {
+    //     if (itr === dasha1[idx][0]) { itr = 0; idx = (idx + 1) % 9; }
+    //     itr++;
+    //     let d2 = new Date(ay + 1, m - 1, day - 1);
+    //     let cA = calcAntar(dob, ay);
+    //     aR.push({
+    //       s: `${day}-${m}-${ay}`,
+    //       e: `${d2.getDate()}-${d2.getMonth() + 1}-${d2.getFullYear()}`,
+    //       m: dasha1[idx][0], a: cA, p: dasha1[cA - 1][1],
+    //     });
+    //     ay++;
+    //   }
+    // }
 
+    let aR = [];
+let [dobY, dobM, dobD] = dob.split("-").map(Number);
+let adStart = new Date(dobY, dobM - 1, dobD);
+let idx = b - 1; 
+let itr = 0;
+
+for (let j = 0; j < 45; j++) {
+  if (itr === dasha1[idx][0]) {
+    itr = 0;
+    idx = (idx + 1) % 9;
+  }
+  
+  let currentMD = dasha1[idx][0];
+  let adEnd = new Date(adStart);
+  adEnd.setFullYear(adEnd.getFullYear() + 1);
+  adEnd.setDate(adEnd.getDate() - 1);
+
+  let cA = calcAntar(dob, adStart.getFullYear());
+
+  aR.push({
+    s: `${adStart.getDate()}-${adStart.getMonth() + 1}-${adStart.getFullYear()}`,
+    e: `${adEnd.getDate()}-${adEnd.getMonth() + 1}-${adEnd.getFullYear()}`,
+    m: currentMD,
+    a: cA,
+    p: dasha1[cA - 1][1]
+  });
+
+  itr++; 
+  adStart = new Date(adEnd);
+  adStart.setDate(adStart.getDate() + 1);
+}
     let pR = [];
     let py = Number(dob.split("-")[0]);
     let fD = new Date(dob);
