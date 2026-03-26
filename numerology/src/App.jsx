@@ -421,8 +421,8 @@ for(let k = 0; k < 3; k++){
               <div className="astro-header">
                 <h1>
                   {isAdvanceView
-                    ? "Advance Astro Dasha Insights"
-                    : "Astro Dasha Insights"}
+                    ? "Advance Astro Arogya's Dasha Insights"
+                    : "Astro Arogya's Numerology Insights"}
                 </h1>
 
                 <div style={{ display: "flex", gap: "10px" }}>
