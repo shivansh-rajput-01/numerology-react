@@ -237,7 +237,8 @@ let adStart = new Date(dobY, dobM - 1, dobD);
 let idx = b - 1; 
 let itr = 0;
 
-for (let j = 0; j < 45; j++) {
+for(let k = 0; k < 3; k++){
+  for (let j = 0; j < 45; j++) {
   if (itr === dasha1[idx][0]) {
     itr = 0;
     idx = (idx + 1) % 9;
@@ -261,6 +262,7 @@ for (let j = 0; j < 45; j++) {
   itr++; 
   adStart = new Date(adEnd);
   adStart.setDate(adStart.getDate() + 1);
+}
 }
     let pR = [];
     let py = Number(dob.split("-")[0]);
