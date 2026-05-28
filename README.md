@@ -25,10 +25,10 @@ Live Project Link: https://numerology-react-xte7.vercel.app/
 Follow these steps to run the project on your local machine:
 
 1. Clone this repository to your local system:
-   git clone https://github.com/your-username/your-repo-name.git
+   git clone https://github.com/shivansh-rajput-01/numerology-react.git
 
 2. Navigate into the project directory:
-   cd your-repo-name
+   cd numerology-react
 
 3. Install all the necessary npm packages:
    npm install
